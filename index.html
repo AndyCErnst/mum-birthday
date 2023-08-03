@@ -6,45 +6,75 @@
 </head>
 
 <body>
+  <div style="width: 100vw; min-height: 100vh;" onclick="play()" id="cover">
+    <div style="cursor: pointer; text-align:center; margin-top: 100px; font-family: cursive; font-size: 40px">Click
+      Here<br /> (has sound)</div>
+  </div>
   <div style="width: 100vw; position:relative">
-    <video autoplay="true" muted id="video" style="width: 100vw;">
-      <source src="./lavender.mp4" type="video/mp4" id="source" />
-    </video>
+    <div class="hidden">
+      <video autoplay="true" muted id="video" style="width: 100vw;">
+        <source src="./lavender.mp4" type="video/mp4" id="source" />
+      </video>
+
+    </div>
+    <audio id="audio" src="./guitar.m4a" loop></audio>
     <img src="./text/text.png" class="happy" />
 
     <img src="./text/lavender.png" class="text" />
   </div>
   <script>
-    const text = document.getElementsByClassName('text')[0]
-    setTimeout(() => {
-      const bigText = document.getElementsByClassName('happy')[0]
-      bigText.classList.add('visible')
-      setTimeout(() => {
-        text.classList.add('visible')
-      }, 2000)
-    }, 5000)
-
     const textSrc = ['hummingbird', 'cat', 'bee', 'lavender2', 'day']
     const sources = ['hummingbird', 'cat', 'bee', 'lavender']
     const video = document.querySelector("video");
     const source = document.querySelector("source");
 
-    video.addEventListener("ended", (event) => {
-      const newSource = sources.shift()
-      console.log('switching to ', newSource)
-      sources.push(newSource)
-      source.src = `./${newSource}.mp4`
-      video.load()
 
-      if (textSrc.length) {
-        text.classList.remove('visible')
+    let played = false
+    function play() {
+      console.log('playing audio')
+
+      const cover = document.getElementById("cover");
+      cover.remove()
+      const audio = document.querySelector("audio");
+      audio.play()
+      
+      if (!played) {
+        played = true
+        const hidden = document.getElementsByClassName('hidden')[0]
+        hidden.classList.remove('hidden')
+
+        console.log('removing hidden')
+        const text = document.getElementsByClassName('text')[0]
         setTimeout(() => {
-          text.src = `./text/${textSrc.shift()}.png`
-          text.classList.add('visible')
+          const bigText = document.getElementsByClassName('happy')[0]
+          bigText.classList.add('visible')
+          console.log('displaying big text')
+          setTimeout(() => {
+            console.log('diplaying little text')
+            text.classList.add('visible')
+          }, 2000)
+        }, 5000)
 
-        }, 2000)
+
+        video.addEventListener("ended", (event) => {
+          const newSource = sources.shift()
+          console.log('switching to ', newSource)
+          sources.push(newSource)
+          source.src = `./${newSource}.mp4`
+          video.load()
+
+          if (textSrc.length) {
+            text.classList.remove('visible')
+            setTimeout(() => {
+              text.src = `./text/${textSrc.shift()}.png`
+              text.classList.add('visible')
+
+            }, 2000)
+          }
+        });
       }
-    });
+    }
+
   </script>
 </body>
 

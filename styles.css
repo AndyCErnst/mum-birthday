@@ -4,13 +4,17 @@ body {
   background-color: #654775;
 }
 
+.hidden {
+  display: none;
+}
+
 .happy {
   position: absolute;
   top: 40%;
   left: 50%;
   width: 50%;
   transform: translate(-50%, -50%);
-  transition: 4s ease all;
+  transition: 3s ease all;
   opacity: 0;
 }
 
