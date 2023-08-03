@@ -37,7 +37,7 @@
       cover.remove()
       const audio = document.querySelector("audio");
       audio.play()
-      
+
       if (!played) {
         played = true
         const hidden = document.getElementsByClassName('hidden')[0]
@@ -68,7 +68,9 @@
             setTimeout(() => {
               text.src = `./text/${textSrc.shift()}.png`
               text.classList.add('visible')
-
+              if (textSrc.length === 0) {
+                bigText.classList.remove('visible')
+              }
             }, 2000)
           }
         });
