@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link href="./styles.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div style="width: 100vw; position:relative">
+    <video autoplay="true" muted id="video" style="width: 100vw;">
+      <source src="./lavender.mp4" type="video/mp4" id="source" />
+    </video>
+    <img src="./text/text.png" class="happy" />
+
+    <img src="./text/lavender.png" class="text" />
+  </div>
+  <script>
+    const text = document.getElementsByClassName('text')[0]
+    setTimeout(() => {
+      const bigText = document.getElementsByClassName('happy')[0]
+      bigText.classList.add('visible')
+      setTimeout(() => {
+        text.classList.add('visible')
+      }, 2000)
+    }, 5000)
+
+    const textSrc = ['hummingbird', 'cat', 'bee', 'lavender2', 'day']
+    const sources = ['hummingbird', 'cat', 'bee', 'lavender']
+    const video = document.querySelector("video");
+    const source = document.querySelector("source");
+
+    video.addEventListener("ended", (event) => {
+      const newSource = sources.shift()
+      console.log('switching to ', newSource)
+      sources.push(newSource)
+      source.src = `./${newSource}.mp4`
+      video.load()
+
+      if (textSrc.length) {
+        text.classList.remove('visible')
+        setTimeout(() => {
+          text.src = `./text/${textSrc.shift()}.png`
+          text.classList.add('visible')
+
+        }, 2000)
+      }
+    });
+  </script>
+</body>
+
+</html>
