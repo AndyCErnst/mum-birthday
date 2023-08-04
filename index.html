@@ -6,16 +6,15 @@
 </head>
 
 <body>
-  <div style="width: 100vw; min-height: 100vh;" onclick="play()" id="cover">
+  <div style="width: 100vw; min-height: 500px;" onclick="play()" id="cover">
     <div style="cursor: pointer; text-align:center; margin-top: 100px; font-family: cursive; font-size: 40px">Click
       Here<br /> (has sound)</div>
   </div>
-  <div style="width: 100vw; position:relative">
+  <div style="width: 100vw; position:relative; padding-top: 56.5%;" onclick="next()">
     <div class="hidden">
-      <video autoplay="true" muted id="video" style="width: 100vw;">
+      <video autoplay="true" muted id="video" style="width: 100vw; position: absolute; top: 0;">
         <source src="./lavender.mp4" type="video/mp4" id="source" />
       </video>
-
     </div>
     <audio id="audio" src="./guitar.m4a" loop></audio>
     <img src="./text/text.png" class="happy" />
@@ -27,6 +26,8 @@
     const sources = ['hummingbird', 'cat', 'bee', 'lavender']
     const video = document.querySelector("video");
     const source = document.querySelector("source");
+    const bigText = document.getElementsByClassName('happy')[0]
+    const text = document.getElementsByClassName('text')[0]
 
 
     let played = false
@@ -44,19 +45,16 @@
         hidden.classList.remove('hidden')
 
         console.log('removing hidden')
-        const text = document.getElementsByClassName('text')[0]
         setTimeout(() => {
-          const bigText = document.getElementsByClassName('happy')[0]
           bigText.classList.add('visible')
           console.log('displaying big text')
           setTimeout(() => {
-            console.log('diplaying little text')
+            console.log('displaying little text')
             text.classList.add('visible')
-          }, 2000)
+          }, 3000)
         }, 5000)
 
-
-        video.addEventListener("ended", (event) => {
+        window.next = function() {
           const newSource = sources.shift()
           console.log('switching to ', newSource)
           sources.push(newSource)
@@ -73,6 +71,11 @@
               }
             }, 2000)
           }
+        }
+
+
+        video.addEventListener("ended", (event) => {
+          next()
         });
       }
     }
