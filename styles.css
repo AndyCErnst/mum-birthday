@@ -24,7 +24,7 @@ body {
   left: 50%;
   width: 40%;
   transform: translateX(-50%);
-  transition: 2s ease all;
+  transition: 1.5s ease all;
   opacity: 0;
 }
 
